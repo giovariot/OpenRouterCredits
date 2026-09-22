@@ -85,9 +85,8 @@ fi
 echo
 echo "== Errori recenti dell'estensione (ultimi 30 minuti)"
 ERRORS="$(log show --last 30m --info --debug --predicate "process == \"${WIDGET_NAME}\"" --style compact 2>/dev/null \
-    | grep -iE "error|crash|denied" \
-    | grep -v "An XPC Service cannot be run directly" \
-    | grep -v "libxpc.dylib" \
+    | grep -iE "error|crash|denied|assertion" \
+    | grep -vE "boringssl|nw_read_request_report|Software caused connection abort|An XPC Service cannot be run directly|libxpc.dylib" \
     | tail -10)"
 if [[ -n "${ERRORS}" ]]; then
     echo "${ERRORS}" | sed 's/^/    /'
