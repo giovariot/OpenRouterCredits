@@ -68,11 +68,35 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
     /// Intervallo di aggiornamento richiesto a WidgetKit.
     static let refreshInterval: TimeInterval = 5 * 60
 
+    /// Traccia diagnostica: scrive nel container condiviso quali chiamate
+    /// riceve il provider e con quali dati. Serve per capire cosa vede il
+    /// widget quando non mostra nulla. Vedi `scripts/check-widget.sh`.
+    /// Il file viene azzerato quando supera i 32 KB.
+    private func trace(_ message: String) {
+        let url = store.directory.appendingPathComponent("widget-trace.log")
+        let line = "\(ISO8601DateFormatter().string(from: Date())) pid=\(ProcessInfo.processInfo.processIdentifier) \(message)\n"
+        guard let data = line.data(using: .utf8) else { return }
+
+        if let size = try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int, size > 32 * 1024 {
+            try? FileManager.default.removeItem(at: url)
+        }
+
+        if let handle = try? FileHandle(forWritingTo: url) {
+            defer { try? handle.close() }
+            _ = try? handle.seekToEnd()
+            try? handle.write(contentsOf: data)
+        } else {
+            try? data.write(to: url)
+        }
+    }
+
     func placeholder(in context: Context) -> CreditsEntry {
-        .placeholder()
+        trace("placeholder")
+        return .placeholder()
     }
 
     func snapshot(for configuration: CreditsWidgetIntent, in context: Context) async -> CreditsEntry {
+        trace("snapshot isPreview=\(context.isPreview)")
         if context.isPreview {
             return .placeholder(style: configuration.style.option, options: configuration.options)
         }
@@ -80,13 +104,16 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: CreditsWidgetIntent, in context: Context) async -> Timeline<CreditsEntry> {
+        trace("timeline inizio")
         let entry = await load(style: configuration.style.option, options: configuration.options)
         let next = Date().addingTimeInterval(Self.refreshInterval)
+        trace("timeline fine snapshot=\(entry.snapshot != nil) prossimo=\(ISO8601DateFormatter().string(from: next))")
         return Timeline(entries: [entry], policy: .after(next))
     }
 
     private func load(style: WidgetStyleOption, options: CreditsWidgetOptions) async -> CreditsEntry {
         let config = store.loadConfig()
+        trace("load dir=\(store.directory.path) configurato=\(config.hasCredentials)")
 
         guard config.hasCredentials else {
             let state = store.loadState()
@@ -104,6 +131,7 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
         do {
             let result = try await client.fetchSnapshot(config: config)
             store.record(result.snapshot, error: result.warnings.first)
+            trace("fetch ok residuo=\(result.snapshot.displayRemaining ?? -1) avvisi=\(result.warnings.count)")
             return CreditsEntry(
                 date: Date(),
                 style: style,
@@ -116,6 +144,7 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
         } catch {
             let message = (error as? OpenRouterError)?.shortDescription ?? Strings.text("Nessuna connessione")
             store.recordFailure(message)
+            trace("fetch fallito: \(message)")
             let state = store.loadState()
             return CreditsEntry(
                 date: Date(),

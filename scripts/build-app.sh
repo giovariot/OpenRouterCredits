@@ -65,7 +65,9 @@ fi
 echo "    identità: ${CODESIGN_IDENTITY}"
 
 echo "==> Compilazione release universale (arm64 + x86_64)"
-swift build -c release --arch arm64 --arch x86_64
+# I const values servono per estrarre il metadata AppIntents (impostazioni del
+# widget): senza, il sistema non riesce a risolvere la configurazione.
+swift build -c release --arch arm64 --arch x86_64 -Xswiftc -emit-const-values
 
 # La cartella dei prodotti cambia tra versioni di SwiftPM.
 PRODUCTS_DIR=""
@@ -101,6 +103,52 @@ for lproj in Localization/*.lproj; do
     cp -R "${lproj}" "${APP_DIR}/Contents/Resources/"
     cp -R "${lproj}" "${APPEX_DIR}/Contents/Resources/"
 done
+
+# WidgetKit risolve le impostazioni del widget (WidgetConfigurationIntent)
+# leggendo il metadata AppIntents: Xcode lo genera con questo strumento a
+# partire dai const values emessi dal compilatore. Senza, il widget resta sul
+# placeholder e non riceve mai la timeline.
+echo "==> Metadata AppIntents (impostazioni del widget)"
+METADATA_TOOL="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor"
+if [[ ! -x "${METADATA_TOOL}" ]]; then
+    METADATA_TOOL="$(xcrun --find appintentsmetadataprocessor 2>/dev/null || true)"
+fi
+if [[ -z "${METADATA_TOOL}" || ! -x "${METADATA_TOOL}" ]]; then
+    echo "errore: appintentsmetadataprocessor non trovato (serve Xcode)" >&2
+    exit 1
+fi
+
+CONST_VALUES_LIST="${OUT_DIR}/widget-const-values.txt"
+find .build -path "*OpenRouterCreditsWidget-p.build*" -name "*-primary.swiftconstvalues" -type f > "${CONST_VALUES_LIST}"
+if [[ ! -s "${CONST_VALUES_LIST}" ]]; then
+    echo "errore: nessun const value del widget trovato" >&2
+    exit 1
+fi
+
+SOURCE_LIST="${OUT_DIR}/widget-sources.txt"
+ls Sources/OpenRouterCreditsWidget/*.swift > "${SOURCE_LIST}"
+
+XCODE_VERSION="$(xcodebuild -version 2>/dev/null | awk '/^Xcode / { gsub(/\./, "", $2); print $2 "00" }' | head -1)"
+XCODE_VERSION="${XCODE_VERSION:-2700}"
+
+rm -rf "${OUT_DIR}/metadata"
+"${METADATA_TOOL}" \
+    --output "${OUT_DIR}/metadata" \
+    --toolchain-dir "$(dirname "$(dirname "$(xcrun --find swiftc)")")" \
+    --module-name "${WIDGET_NAME}" \
+    --sdk-root "$(xcrun --sdk macosx --show-sdk-path)" \
+    --xcode-version "${XCODE_VERSION}" \
+    --platform-family macOS \
+    --deployment-target "${DEPLOYMENT_TARGET}" \
+    --target-triple "$(uname -m)-apple-macos${DEPLOYMENT_TARGET}" \
+    --source-file-list "${SOURCE_LIST}" \
+    --swift-const-vals-list "${CONST_VALUES_LIST}"
+
+if [[ ! -f "${OUT_DIR}/metadata/Metadata.appintents/extract.actionsdata" ]]; then
+    echo "errore: metadata AppIntents non generato" >&2
+    exit 1
+fi
+cp -R "${OUT_DIR}/metadata/Metadata.appintents" "${APPEX_DIR}/Contents/Resources/"
 
 cat > "${APP_DIR}/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

@@ -108,12 +108,15 @@ chiave di gestione), il widget ripiega automaticamente sul credito residuo.
 
 ## Aggiornamento
 
-- Il widget chiede a WidgetKit una nuova timeline **ogni 5 minuti**; l'app,
-  quando è aperta, ricontrolla **ogni 4 minuti** e ricarica il widget.
-- macOS può rimandare gli aggiornamenti dei widget per risparmiare energia: se
-  il valore sembra fermo, apri l'app e premi **Aggiorna ora**.
-- Attiva **Avvia all'accesso** nelle preferenze dell'app se vuoi che i dati
-  restino aggiornati anche senza aprire manualmente l'app.
+- Il widget ricontrolla i crediti da solo nella propria timeline **ogni 5
+  minuti circa** (macOS può concedere tempi più lunghi per risparmiare
+  energia).
+- L'app non resta in esecuzione: quando chiudi la finestra si chiude anche
+  lei, e il widget continua a funzionare. Serve solo a configurare le chiavi e
+  a mostrare lo stato; con la finestra aperta ricontrolla **ogni 4 minuti**.
+- **Avvia all'accesso** serve solo se vuoi che l'app ricontrolli i dati più
+  spesso (aprirà la finestra a ogni accesso): lascialo spento se ti basta il
+  widget.
 
 ## Dove finiscono i dati
 
@@ -187,6 +190,17 @@ funzioni:
   valore in evidenza, grafico, centesimi) sono parametri di un
   `WidgetConfigurationIntent`: si scelgono dal pannello "Modifica widget" di
   macOS, come per i widget di sistema, senza schermate dentro l'app.
+- **Metadata AppIntents obbligatorio.** Perché il sistema possa mostrare quelle
+  impostazioni e risolvere la configurazione, l'estensione deve contenere
+  `Contents/Resources/Metadata.appintents`. Xcode lo genera con
+  `appintentsmetadataprocessor` a partire dai *const values* emessi dal
+  compilatore; `scripts/build-app.sh` fa lo stesso dopo la compilazione.
+  Senza questo file il widget resta sul placeholder e non riceve mai la
+  timeline: i dati vengono letti, ma la vista non si aggiorna.
+- **Diagnostica nel container.** L'estensione scrive
+  `widget-trace.log` accanto a `config.json`: dice quali chiamate riceve
+  (`placeholder`, `snapshot`, `timeline`) e con quali dati.
+  `./scripts/check-widget.sh` ne mostra le ultime righe.
 - **Traduzioni senza Xcode.** I file `.strings` vengono copiati dentro
   `Contents/Resources` di app ed estensione in fase di build; le stringhe
   dell'interfaccia passano da `Strings.text(…)` (chiave = frase italiana), così

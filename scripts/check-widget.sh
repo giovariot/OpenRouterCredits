@@ -94,3 +94,15 @@ if [[ -n "${ERRORS}" ]]; then
 else
     echo "    nessun errore"
 fi
+
+echo
+echo "== Ultime richieste ricevute dal widget"
+if [[ -n "${DATA_DIR}" && -f "${DATA_DIR}/widget-trace.log" ]]; then
+    tail -6 "${DATA_DIR}/widget-trace.log" | sed 's/^/    /'
+    if ! grep -q "timeline" "${DATA_DIR}/widget-trace.log"; then
+        echo "    attenzione: il widget non ha mai chiesto la timeline"
+        echo "    (controlla che il metadata AppIntents sia nell'estensione)"
+    fi
+else
+    echo "    nessuna traccia: apri l'app una volta e aggiungi il widget"
+fi
