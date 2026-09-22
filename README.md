@@ -195,8 +195,10 @@ funzioni:
   `Contents/Resources/Metadata.appintents`. Xcode lo genera con
   `appintentsmetadataprocessor` a partire dai *const values* emessi dal
   compilatore; `scripts/build-app.sh` fa lo stesso dopo la compilazione.
-  Senza questo file il widget resta sul placeholder e non riceve mai la
-  timeline: i dati vengono letti, ma la vista non si aggiorna.
+  Senza questo file il widget resta sul placeholder, i dati vengono letti ma la
+  vista non si aggiorna, e nei log compare
+  `CHSErrorDomain Code=1103 "Intent configuration is required but was not
+  provided"`.
 - **Diagnostica nel container.** L'estensione scrive
   `widget-trace.log` accanto a `config.json`: dice quali chiamate riceve
   (`placeholder`, `snapshot`, `timeline`) e con quali dati.
