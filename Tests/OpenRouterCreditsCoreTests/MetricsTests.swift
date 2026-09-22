@@ -6,10 +6,16 @@ import XCTest
 final class MetricsTests: XCTestCase {
     private let now = Date()
 
-    private func model(snapshot: CreditsSnapshot?, lastError: String? = nil, isConfigured: Bool = true) -> CreditsWidgetModel {
+    private func model(
+        snapshot: CreditsSnapshot?,
+        lastError: String? = nil,
+        isConfigured: Bool = true,
+        options: CreditsWidgetOptions = .default
+    ) -> CreditsWidgetModel {
         CreditsWidgetModel(
             size: .medium,
             style: .automatic,
+            options: options,
             snapshot: snapshot,
             history: [],
             lastError: lastError,
@@ -86,5 +92,59 @@ final class MetricsTests: XCTestCase {
     func testPercentFormatting() {
         XCTAssertEqual(Format.percent(0.62), "62%")
         XCTAssertEqual(Format.percent(nil), "--")
+    }
+
+    // MARK: - Impostazioni del widget
+
+    func testMetricOptionShowsDailySpending() {
+        let snapshot = CreditsSnapshot(
+            updatedAt: now,
+            accountRemaining: 12.4,
+            accountTotal: 20,
+            keyUsage: 7.6,
+            usageDaily: 0.42,
+            usageWeekly: 1.87,
+            usageMonthly: 5.31
+        )
+        let metrics = WidgetMetrics.build(
+            from: model(snapshot: snapshot, options: CreditsWidgetOptions(metric: .daily))
+        )
+        XCTAssertEqual(metrics.metric, .daily)
+        XCTAssertEqual(metrics.kind, .usage)
+        XCTAssertEqual(metrics.heroValue ?? 0, 0.42, accuracy: 0.0001)
+        XCTAssertEqual(metrics.caption, "spesa di oggi")
+        XCTAssertNil(metrics.fraction, "senza residuo non c'è barra")
+    }
+
+    func testMetricOptionShowsTotalSpending() {
+        let snapshot = CreditsSnapshot(updatedAt: now, keyUsage: 42.19, usageDaily: 1.24)
+        let metrics = WidgetMetrics.build(
+            from: model(snapshot: snapshot, options: CreditsWidgetOptions(metric: .total))
+        )
+        XCTAssertEqual(metrics.metric, .total)
+        XCTAssertEqual(metrics.heroValue ?? 0, 42.19, accuracy: 0.0001)
+        XCTAssertEqual(metrics.caption, "spesa totale")
+    }
+
+    func testMetricFallsBackWhenTheChosenValueIsMissing() {
+        // Chiave di gestione: c'è il saldo ma non la spesa giornaliera.
+        let snapshot = CreditsSnapshot(updatedAt: now, accountRemaining: 12.4, accountTotal: 20)
+        let metrics = WidgetMetrics.build(
+            from: model(snapshot: snapshot, options: CreditsWidgetOptions(metric: .daily))
+        )
+        XCTAssertEqual(metrics.metric, .automatic)
+        XCTAssertEqual(metrics.caption, "credito residuo")
+        XCTAssertEqual(metrics.heroValue ?? 0, 12.4, accuracy: 0.0001)
+    }
+
+    func testCentsOptionRoundsAmounts() {
+        let snapshot = CreditsSnapshot(updatedAt: now, accountRemaining: 12.4, accountTotal: 20, usageDaily: 0.42)
+        let metrics = WidgetMetrics.build(
+            from: model(snapshot: snapshot, options: CreditsWidgetOptions(showCents: false))
+        )
+        XCTAssertEqual(metrics.detail, "di \(Format.money(20, cents: false)) totali")
+        XCTAssertEqual(metrics.dailyText, "Oggi \(Format.money(0.42, cents: false))")
+        XCTAssertTrue(Format.money(20, cents: false).contains("$20"))
+        XCTAssertFalse(Format.money(20, cents: false).contains("20.00"))
     }
 }

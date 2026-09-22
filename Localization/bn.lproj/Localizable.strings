@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "macOS-এর লাইট বা ডার্ক চেহারা অনুসরণ করে";
 "Fondo bianco, accento viola" = "সাদা ব্যাকগ্রাউন্ড, বেগুনি অ্যাকসেন্ট";
 "Fondo nero, accento verde" = "কালো ব্যাকগ্রাউন্ড, সবুজ অ্যাকসেন্ট";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "বড় করে দেখান";
+"Quale valore mettere in grande." = "কোন মানটি বড় করে দেখাবে।";
+"Spesa di oggi" = "আজকের খরচ";
+"Spesa della settimana" = "এই সপ্তাহের খরচ";
+"Spesa del mese" = "এই মাসের খরচ";
+"Credito residuo, se disponibile" = "বাকি ক্রেডিট, থাকলে";
+"Grafico 24 ore" = "২৪ ঘণ্টার গ্রাফ";
+"Mostra l'andamento nel widget medio." = "মাঝারি উইজেটে ধারা দেখায়।";
+"Mostra i centesimi" = "সেন্ট দেখান";
+"Se disattivato, gli importi sono arrotondati." = "বন্ধ থাকলে অঙ্কগুলো গোল করা হয়।";
+"spesa della settimana" = "এই সপ্তাহের খরচ";
+"spesa del mese" = "এই মাসের খরচ";

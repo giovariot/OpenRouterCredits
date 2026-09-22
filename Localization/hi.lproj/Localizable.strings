@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "macOS की लाइट या डार्क थीम के अनुसार";
 "Fondo bianco, accento viola" = "सफ़ेद बैकग्राउंड, वायलेट रंग";
 "Fondo nero, accento verde" = "काला बैकग्राउंड, हरा रंग";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "मुख्य रूप से दिखाएँ";
+"Quale valore mettere in grande." = "कौन सा मान बड़ा दिखाना है।";
+"Spesa di oggi" = "आज का खर्च";
+"Spesa della settimana" = "इस हफ़्ते का खर्च";
+"Spesa del mese" = "इस महीने का खर्च";
+"Credito residuo, se disponibile" = "बचा क्रेडिट, अगर उपलब्ध हो";
+"Grafico 24 ore" = "24 घंटे का ग्राफ़";
+"Mostra l'andamento nel widget medio." = "मध्यम विजेट में रुझान दिखाता है।";
+"Mostra i centesimi" = "सेंट दिखाएँ";
+"Se disattivato, gli importi sono arrotondati." = "बंद होने पर रकमें गोल कर दी जाती हैं।";
+"spesa della settimana" = "इस हफ़्ते का खर्च";
+"spesa del mese" = "इस महीने का खर्च";

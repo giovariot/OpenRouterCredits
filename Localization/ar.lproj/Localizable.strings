@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "يتبع مظهر macOS الفاتح أو الداكن";
 "Fondo bianco, accento viola" = "خلفية بيضاء، لمسة بنفسجية";
 "Fondo nero, accento verde" = "خلفية سوداء، لمسة خضراء";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "إبراز";
+"Quale valore mettere in grande." = "أي قيمة تظهر بالحجم الكبير.";
+"Spesa di oggi" = "مصروف اليوم";
+"Spesa della settimana" = "مصروف هذا الأسبوع";
+"Spesa del mese" = "مصروف هذا الشهر";
+"Credito residuo, se disponibile" = "الرصيد المتبقي إن وُجد";
+"Grafico 24 ore" = "رسم 24 ساعة";
+"Mostra l'andamento nel widget medio." = "يعرض التغير في الودجة المتوسطة.";
+"Mostra i centesimi" = "إظهار الكسور";
+"Se disattivato, gli importi sono arrotondati." = "عند الإيقاف تُقرَّب المبالغ.";
+"spesa della settimana" = "مصروف هذا الأسبوع";
+"spesa del mese" = "مصروف هذا الشهر";

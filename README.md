@@ -30,6 +30,8 @@ In modalità "monocromatico" il widget segue il sistema come gli altri:
   settimana e del mese, richieste gratuite rimaste.
 - Nel widget medio: mini grafico dell'andamento delle ultime 24 ore (storico
   salvato in locale a ogni aggiornamento).
+- Le impostazioni si scelgono dal widget stesso (schema colori, valore in
+  evidenza, grafico, centesimi).
 
 ## Lingue
 
@@ -83,8 +85,26 @@ make install   # copia in /Applications, registra l'estensione e apre l'app
      del conto invece del solo limite della chiave.
 2. Aggiungi il widget: clic destro sul desktop → **Modifica widget…**, cerca
    "OpenRouter", scegli piccolo o medio e trascinalo dove vuoi.
-3. Per cambiare schema colore: clic destro sul widget → **Modifica widget…** →
-   *Schema colori* (Automatico, Giorno, Notte).
+3. Le opzioni si cambiano dal widget stesso: clic destro sul widget →
+   **Modifica "Crediti OpenRouter"…** (vedi sotto).
+
+### Impostazioni del widget
+
+Come nei widget di sistema, le opzioni stanno direttamente sul widget: clic
+destro sul widget → **Modifica "Crediti OpenRouter"…**
+
+| Impostazione | Cosa fa |
+|---|---|
+| **Schema colori** | Automatico, Giorno (bianco e viola) o Notte (nero e verde) |
+| **Mostra in evidenza** | Quale valore mettere in grande: automatico (credito residuo), spesa di oggi, della settimana, del mese o totale |
+| **Grafico 24 ore** | Mostra o nasconde il grafico dell'andamento nel widget medio |
+| **Mostra i centesimi** | Se disattivato, gli importi sono arrotondati (`$12` invece di `$12.40`) |
+
+Se il valore scelto non esiste (per esempio la spesa giornaliera con la sola
+chiave di gestione), il widget ripiega automaticamente sul credito residuo.
+
+![Widget con la spesa di oggi in evidenza](docs/previews/medium-spesa-oggi.png)
+![Widget senza grafico, con la spesa di oggi a destra](docs/previews/medium-senza-grafico.png)
 
 ## Aggiornamento
 
@@ -163,9 +183,10 @@ funzioni:
   base all'SDK *collegato*, quindi `scripts/build-app.sh` riscrive entrambi i
   binari con `vtool -set-build-version macos 14.0 <sdk>` e rifirma (la
   modifica invalida la firma).
-- **Configurazione via AppIntent.** Lo schema colore è un parametro
-  `WidgetConfigurationIntent`, quindi si sceglie dal menu "Modifica widget" di
-  macOS invece che da una schermata dentro l'app.
+- **Configurazione via AppIntent.** Le impostazioni del widget (schema colori,
+  valore in evidenza, grafico, centesimi) sono parametri di un
+  `WidgetConfigurationIntent`: si scelgono dal pannello "Modifica widget" di
+  macOS, come per i widget di sistema, senza schermate dentro l'app.
 - **Traduzioni senza Xcode.** I file `.strings` vengono copiati dentro
   `Contents/Resources` di app ed estensione in fase di build; le stringhe
   dell'interfaccia passano da `Strings.text(…)` (chiave = frase italiana), così

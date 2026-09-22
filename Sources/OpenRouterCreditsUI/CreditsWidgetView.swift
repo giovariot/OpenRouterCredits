@@ -104,7 +104,7 @@ public struct CreditsWidgetView: View {
 
     private func hero(fontSize: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(metrics.heroValue.map { Format.money($0) } ?? "$--")
+            Text(metrics.heroValue.map { Format.money($0, cents: model.options.showCents) } ?? "$--")
                 .font(.system(size: fontSize, weight: .semibold))
                 .monospacedDigit()
                 .foregroundStyle(theme.textPrimary)
@@ -157,7 +157,7 @@ public struct CreditsWidgetView: View {
 
     private var sidePanel: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            if model.history.count >= 2 {
+            if usesChart {
                 Sparkline(samples: model.history, theme: theme)
                     .frame(width: 122, height: 52)
                 Text(Strings.text("ultime 24 ore"))
@@ -165,34 +165,66 @@ public struct CreditsWidgetView: View {
                     .foregroundStyle(theme.textTertiary)
                     .padding(.top, 3)
             } else {
-                Text(Format.money(metrics.dailyAmount))
+                Text(Format.money(panelValue, cents: model.options.showCents))
                     .font(.system(size: 20, weight: .semibold))
                     .monospacedDigit()
                     .foregroundStyle(theme.textPrimary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .widgetAccentable()
-                Text(Strings.text("spesa di oggi"))
+                Text(panelLabel)
                     .font(.system(size: 9, weight: .medium))
                     .foregroundStyle(theme.textTertiary)
+                    .lineLimit(1)
                     .padding(.top, 1)
             }
 
             Spacer(minLength: 6)
 
             VStack(alignment: .trailing, spacing: 3) {
-                if let daily = metrics.dailyText, model.history.count >= 2 {
+                if !hiddenStatMetrics.contains(.daily), let daily = metrics.dailyText {
                     statLine(daily)
                 }
-                if let weekly = metrics.weeklyText {
+                if !hiddenStatMetrics.contains(.weekly), let weekly = metrics.weeklyText {
                     statLine(weekly)
                 }
-                if let monthly = metrics.monthlyText {
+                if !hiddenStatMetrics.contains(.monthly), let monthly = metrics.monthlyText {
                     statLine(monthly)
                 }
             }
         }
         .frame(width: 122, alignment: .trailing)
+    }
+
+    /// I valori già mostrati in grande (o nel pannello senza grafico) non
+    /// vengono ripetuti nell'elenco a destra.
+    private var hiddenStatMetrics: Set<WidgetMetric> {
+        var hidden: Set<WidgetMetric> = [metrics.metric]
+        if !usesChart, !(metrics.metric == .daily && model.snapshot?.displayRemaining != nil) {
+            hidden.insert(.daily)
+        }
+        return hidden
+    }
+
+    /// Il grafico si può spegnere dalle impostazioni del widget.
+    private var usesChart: Bool {
+        model.options.showChart && model.history.count >= 2
+    }
+
+    /// Senza grafico si mostra la spesa di oggi, o il residuo se la spesa di
+    /// oggi è già il numero in evidenza.
+    private var panelValue: Double? {
+        if metrics.metric == .daily, let remaining = model.snapshot?.displayRemaining {
+            return remaining
+        }
+        return metrics.dailyAmount
+    }
+
+    private var panelLabel: String {
+        if metrics.metric == .daily, model.snapshot?.displayRemaining != nil {
+            return Strings.text("credito residuo")
+        }
+        return Strings.text("spesa di oggi")
     }
 
     private func statLine(_ text: String) -> some View {

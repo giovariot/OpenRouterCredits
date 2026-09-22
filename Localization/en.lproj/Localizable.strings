@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "Follows the light or dark appearance of macOS";
 "Fondo bianco, accento viola" = "White background, violet accent";
 "Fondo nero, accento verde" = "Black background, green accent";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "Highlight";
+"Quale valore mettere in grande." = "Which value to show large.";
+"Spesa di oggi" = "Today's spending";
+"Spesa della settimana" = "This week's spending";
+"Spesa del mese" = "This month's spending";
+"Credito residuo, se disponibile" = "Remaining credit, if available";
+"Grafico 24 ore" = "24-hour chart";
+"Mostra l'andamento nel widget medio." = "Shows the trend in the medium widget.";
+"Mostra i centesimi" = "Show cents";
+"Se disattivato, gli importi sono arrotondati." = "When off, amounts are rounded.";
+"spesa della settimana" = "this week's spending";
+"spesa del mese" = "this month's spending";

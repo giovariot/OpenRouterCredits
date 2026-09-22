@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "Folgt dem hellen oder dunklen Erscheinungsbild von macOS";
 "Fondo bianco, accento viola" = "Weißer Hintergrund, violetter Akzent";
 "Fondo nero, accento verde" = "Schwarzer Hintergrund, grüner Akzent";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "Hervorheben";
+"Quale valore mettere in grande." = "Welcher Wert groß angezeigt wird.";
+"Spesa di oggi" = "Heutige Ausgaben";
+"Spesa della settimana" = "Ausgaben dieser Woche";
+"Spesa del mese" = "Ausgaben dieses Monats";
+"Credito residuo, se disponibile" = "Restguthaben, falls verfügbar";
+"Grafico 24 ore" = "24-Stunden-Diagramm";
+"Mostra l'andamento nel widget medio." = "Zeigt den Verlauf im mittleren Widget.";
+"Mostra i centesimi" = "Cent anzeigen";
+"Se disattivato, gli importi sono arrotondati." = "Wenn aus, werden Beträge gerundet.";
+"spesa della settimana" = "Ausgaben dieser Woche";
+"spesa del mese" = "Ausgaben dieses Monats";

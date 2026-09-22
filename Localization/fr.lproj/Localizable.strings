@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "Suit l'apparence claire ou sombre de macOS";
 "Fondo bianco, accento viola" = "Fond blanc, accent violet";
 "Fondo nero, accento verde" = "Fond noir, accent vert";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "Mettre en avant";
+"Quale valore mettere in grande." = "Quelle valeur afficher en grand.";
+"Spesa di oggi" = "Dépenses du jour";
+"Spesa della settimana" = "Dépenses de la semaine";
+"Spesa del mese" = "Dépenses du mois";
+"Credito residuo, se disponibile" = "Crédit restant, si disponible";
+"Grafico 24 ore" = "Graphique sur 24 h";
+"Mostra l'andamento nel widget medio." = "Affiche la tendance dans le widget moyen.";
+"Mostra i centesimi" = "Afficher les centimes";
+"Se disattivato, gli importi sono arrotondati." = "Si désactivé, les montants sont arrondis.";
+"spesa della settimana" = "dépenses de la semaine";
+"spesa del mese" = "dépenses du mois";

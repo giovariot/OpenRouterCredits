@@ -14,23 +14,35 @@ public enum Format {
         return formatter
     }()
 
+    private static let wholeFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        formatter.currencySymbol = "$"
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
+
     /// `$12.40`, oppure `$--` quando il valore non è noto.
     /// Il valore è racchiuso tra marcatori di direzione così resta corretto
     /// anche nelle lingue da destra a sinistra (arabo, urdu).
-    public static func money(_ value: Double?) -> String {
-        isolate(amountText(value))
+    public static func money(_ value: Double?, cents: Bool = true) -> String {
+        isolate(amountText(value, cents: cents))
     }
 
-    public static func money(_ value: Double) -> String {
-        isolate(amountText(value))
+    public static func money(_ value: Double, cents: Bool = true) -> String {
+        isolate(amountText(value, cents: cents))
     }
 
-    private static func amountText(_ value: Double?) -> String {
+    private static func amountText(_ value: Double?, cents: Bool) -> String {
         guard let value else { return "$--" }
         if value >= 10_000 {
-            return "$" + String(format: "%.1fK", value / 1_000)
+            return "$" + String(format: cents ? "%.1fK" : "%.0fK", value / 1_000)
         }
-        return moneyFormatter.string(from: NSNumber(value: value)) ?? "$\(value)"
+        let formatter = cents ? moneyFormatter : wholeFormatter
+        return formatter.string(from: NSNumber(value: value)) ?? "$\(value)"
     }
 
     /// Isola un tratto di testo da sinistra a destra dentro una frase RTL.

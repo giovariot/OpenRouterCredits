@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "跟随 macOS 的浅色或深色外观";
 "Fondo bianco, accento viola" = "白色背景，紫色点缀";
 "Fondo nero, accento verde" = "黑色背景，绿色点缀";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "突出显示";
+"Quale valore mettere in grande." = "以大字显示哪个数值。";
+"Spesa di oggi" = "今日消费";
+"Spesa della settimana" = "本周消费";
+"Spesa del mese" = "本月消费";
+"Credito residuo, se disponibile" = "可用时显示剩余额度";
+"Grafico 24 ore" = "24 小时图表";
+"Mostra l'andamento nel widget medio." = "在中型小部件中显示趋势。";
+"Mostra i centesimi" = "显示小数";
+"Se disattivato, gli importi sono arrotondati." = "关闭后金额将四舍五入。";
+"spesa della settimana" = "本周消费";
+"spesa del mese" = "本月消费";

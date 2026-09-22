@@ -90,3 +90,17 @@
 "Segue l'aspetto chiaro o scuro di macOS" = "Следует светлому или тёмному оформлению macOS";
 "Fondo bianco, accento viola" = "Белый фон, фиолетовый акцент";
 "Fondo nero, accento verde" = "Чёрный фон, зелёный акцент";
+
+/* Impostazioni del widget */
+"Mostra in evidenza" = "Выделить";
+"Quale valore mettere in grande." = "Какое значение показывать крупно.";
+"Spesa di oggi" = "Расходы за сегодня";
+"Spesa della settimana" = "Расходы за неделю";
+"Spesa del mese" = "Расходы за месяц";
+"Credito residuo, se disponibile" = "Остаток средств, если есть";
+"Grafico 24 ore" = "График за 24 часа";
+"Mostra l'andamento nel widget medio." = "Показывает динамику в среднем виджете.";
+"Mostra i centesimi" = "Показывать центы";
+"Se disattivato, gli importi sono arrotondati." = "Если выключено, суммы округляются.";
+"spesa della settimana" = "расходы за неделю";
+"spesa del mese" = "расходы за месяц";

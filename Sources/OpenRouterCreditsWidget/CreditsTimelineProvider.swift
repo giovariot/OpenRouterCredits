@@ -5,6 +5,7 @@ import WidgetKit
 struct CreditsEntry: TimelineEntry {
     let date: Date
     let style: WidgetStyleOption
+    let options: CreditsWidgetOptions
     let snapshot: CreditsSnapshot?
     let history: [StoredState.Sample]
     let lastError: String?
@@ -13,7 +14,10 @@ struct CreditsEntry: TimelineEntry {
 
 extension CreditsEntry {
     /// Dati di esempio usati per l'anteprima nella galleria widget.
-    static func placeholder(style: WidgetStyleOption = .automatic) -> CreditsEntry {
+    static func placeholder(
+        style: WidgetStyleOption = .automatic,
+        options: CreditsWidgetOptions = .default
+    ) -> CreditsEntry {
         let now = Date()
         let snapshot = CreditsSnapshot(
             updatedAt: now.addingTimeInterval(-90),
@@ -33,6 +37,7 @@ extension CreditsEntry {
         return CreditsEntry(
             date: now,
             style: style,
+            options: options,
             snapshot: snapshot,
             history: sampleHistory(endingAt: now),
             lastError: nil,
@@ -69,18 +74,18 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
 
     func snapshot(for configuration: CreditsWidgetIntent, in context: Context) async -> CreditsEntry {
         if context.isPreview {
-            return .placeholder(style: configuration.style.option)
+            return .placeholder(style: configuration.style.option, options: configuration.options)
         }
-        return await load(style: configuration.style.option)
+        return await load(style: configuration.style.option, options: configuration.options)
     }
 
     func timeline(for configuration: CreditsWidgetIntent, in context: Context) async -> Timeline<CreditsEntry> {
-        let entry = await load(style: configuration.style.option)
+        let entry = await load(style: configuration.style.option, options: configuration.options)
         let next = Date().addingTimeInterval(Self.refreshInterval)
         return Timeline(entries: [entry], policy: .after(next))
     }
 
-    private func load(style: WidgetStyleOption) async -> CreditsEntry {
+    private func load(style: WidgetStyleOption, options: CreditsWidgetOptions) async -> CreditsEntry {
         let config = store.loadConfig()
 
         guard config.hasCredentials else {
@@ -88,6 +93,7 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
             return CreditsEntry(
                 date: Date(),
                 style: style,
+                options: options,
                 snapshot: state.snapshot,
                 history: state.history,
                 lastError: nil,
@@ -101,18 +107,20 @@ struct CreditsTimelineProvider: AppIntentTimelineProvider {
             return CreditsEntry(
                 date: Date(),
                 style: style,
+                options: options,
                 snapshot: result.snapshot,
                 history: store.loadState().history,
                 lastError: result.warnings.first,
                 isConfigured: true
             )
         } catch {
-            let message = (error as? OpenRouterError)?.shortDescription ?? "Errore di rete"
+            let message = (error as? OpenRouterError)?.shortDescription ?? Strings.text("Nessuna connessione")
             store.recordFailure(message)
             let state = store.loadState()
             return CreditsEntry(
                 date: Date(),
                 style: style,
+                options: options,
                 snapshot: state.snapshot,
                 history: state.history,
                 lastError: message,

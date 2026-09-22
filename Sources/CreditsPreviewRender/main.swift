@@ -39,6 +39,7 @@ struct Scenario {
     var lastError: String?
     var isConfigured: Bool
     var wallpaper: Bool
+    var options: CreditsWidgetOptions = .default
 }
 
 func sampleHistory(now: Date) -> [StoredState.Sample] {
@@ -109,6 +110,15 @@ let scenarios: [Scenario] = [
              snapshot: nil, history: [], lastError: nil, isConfigured: false, wallpaper: false),
     Scenario(name: "medium-errore", size: .medium, style: .whitePurple, colorScheme: .light, renderingMode: .fullColor,
              snapshot: accountSnapshot, history: sampleHistory(now: now), lastError: "Nessuna connessione", isConfigured: true, wallpaper: false),
+    Scenario(name: "medium-spesa-oggi", size: .medium, style: .whitePurple, colorScheme: .light, renderingMode: .fullColor,
+             snapshot: accountSnapshot, history: sampleHistory(now: now), lastError: nil, isConfigured: true, wallpaper: false,
+             options: CreditsWidgetOptions(metric: .daily)),
+    Scenario(name: "medium-senza-grafico", size: .medium, style: .blackGreen, colorScheme: .dark, renderingMode: .fullColor,
+             snapshot: keyOnlySnapshot, history: sampleHistory(now: now), lastError: nil, isConfigured: true, wallpaper: false,
+             options: CreditsWidgetOptions(showChart: false)),
+    Scenario(name: "small-senza-centesimi", size: .small, style: .whitePurple, colorScheme: .light, renderingMode: .fullColor,
+             snapshot: accountSnapshot, history: [], lastError: nil, isConfigured: true, wallpaper: false,
+             options: CreditsWidgetOptions(showCents: false)),
     Scenario(name: "small-monocromatico", size: .small, style: .automatic, colorScheme: .dark, renderingMode: .vibrant,
              snapshot: accountSnapshot, history: sampleHistory(now: now), lastError: nil, isConfigured: true, wallpaper: true),
     Scenario(name: "medium-monocromatico", size: .medium, style: .automatic, colorScheme: .dark, renderingMode: .vibrant,
@@ -141,6 +151,7 @@ func render(_ scenario: Scenario) {
     let model = CreditsWidgetModel(
         size: scenario.size,
         style: scenario.style,
+        options: scenario.options,
         snapshot: scenario.snapshot,
         history: scenario.history,
         lastError: scenario.lastError,

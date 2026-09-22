@@ -25,6 +25,7 @@ struct CreditsEntryView: View {
         CreditsWidgetModel(
             size: family == .systemMedium ? .medium : .small,
             style: entry.style,
+            options: entry.options,
             snapshot: entry.snapshot,
             history: entry.history,
             lastError: entry.lastError,

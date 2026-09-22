@@ -52,6 +52,7 @@ for file in Path("Sources").rglob("*.swift"):
     code_keys |= set(re.findall(r'Strings\.text\("([^"]+)"', text))
     if "CreditsWidgetIntent" in file.name:
         code_keys |= set(re.findall(r'(?:title|subtitle):\s*"([^"]+)"', text))
+        code_keys |= set(re.findall(r'description:\s*"([^"]+)"', text))
         code_keys |= set(re.findall(r'TypeDisplayRepresentation\(name:\s*"([^"]+)"', text))
         code_keys |= set(re.findall(r'IntentDescription\("([^"]+)"', text))
     if file.name == "CreditsWidget.swift":

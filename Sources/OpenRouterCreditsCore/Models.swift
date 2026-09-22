@@ -25,6 +25,33 @@ public enum WidgetStyleOption: String, Codable, CaseIterable, Sendable {
     }
 }
 
+/// Quale valore mettere in evidenza nel widget.
+public enum WidgetMetric: String, Codable, CaseIterable, Sendable {
+    /// Credito residuo se disponibile, altrimenti la spesa.
+    case automatic
+    case daily
+    case weekly
+    case monthly
+    case total
+}
+
+/// Le scelte fatte dall'utente nel pannello "Modifica widget".
+public struct CreditsWidgetOptions: Codable, Equatable, Sendable {
+    public var metric: WidgetMetric
+    /// Mostra il grafico dell'andamento nel widget medio.
+    public var showChart: Bool
+    /// Mostra i centesimi negli importi.
+    public var showCents: Bool
+
+    public init(metric: WidgetMetric = .automatic, showChart: Bool = true, showCents: Bool = true) {
+        self.metric = metric
+        self.showChart = showChart
+        self.showCents = showCents
+    }
+
+    public static let `default` = CreditsWidgetOptions()
+}
+
 /// Da dove arriva il numero mostrato come "crediti disponibili".
 public enum CreditsSource: String, Codable, Sendable {
     /// Saldo del conto (`GET /credits`, richiede una chiave di gestione).
