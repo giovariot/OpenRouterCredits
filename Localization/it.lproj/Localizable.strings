@@ -1,0 +1,94 @@
+/* OpenRouter Credits — lingua base (italiano).
+   Le chiavi sono le frasi italiane: se manca una traduzione si mostra la
+   chiave stessa. Non modificare le chiavi: sono condivise con il codice. */
+
+"ora" = "ora";
+"%d min fa" = "%d min fa";
+"1 h fa" = "1 h fa";
+"%d h fa" = "%d h fa";
+"ieri" = "ieri";
+
+"OpenRouter Credits" = "OpenRouter Credits";
+"Credito residuo e spesa, sempre sotto controllo nel widget." = "Credito residuo e spesa, sempre sotto controllo nel widget.";
+"Benvenuto" = "Benvenuto";
+"Inserisci qui sotto una chiave API di OpenRouter per iniziare." = "Inserisci qui sotto una chiave API di OpenRouter per iniziare.";
+"Nessun dato disponibile" = "Nessun dato disponibile";
+"Controlla la connessione e premi «Aggiorna ora»." = "Controlla la connessione e premi «Aggiorna ora».";
+"Chiavi OpenRouter" = "Chiavi OpenRouter";
+"Chiave API (sk-or-v1-...)" = "Chiave API (sk-or-v1-...)";
+"Usata per leggere il limite e la spesa della chiave." = "Usata per leggere il limite e la spesa della chiave.";
+"Chiave di gestione (opzionale)" = "Chiave di gestione (opzionale)";
+"Serve solo per conoscere il saldo del conto (endpoint /credits)." = "Serve solo per conoscere il saldo del conto (endpoint /credits).";
+"Salva chiavi" = "Salva chiavi";
+"Chiavi salvate." = "Chiavi salvate.";
+"Chiavi rimosse." = "Chiavi rimosse.";
+"Aggiorna ora" = "Aggiorna ora";
+"Aggiornamento…" = "Aggiornamento…";
+"Crediti aggiornati." = "Crediti aggiornati.";
+"Crea una chiave" = "Crea una chiave";
+"Preferenze" = "Preferenze";
+"Schema colori predefinito" = "Schema colori predefinito";
+"Avvia all'accesso" = "Avvia all'accesso";
+"L'app si avvierà all'accesso." = "L'app si avvierà all'accesso.";
+"Avvio automatico disattivato." = "Avvio automatico disattivato.";
+"Impossibile cambiare l'avvio automatico: %@" = "Impossibile cambiare l'avvio automatico: %@";
+"L'app ricontrolla i crediti ogni 4 minuti mentre è aperta; il widget si aggiorna da solo circa ogni 5 minuti." = "L'app ricontrolla i crediti ogni 4 minuti mentre è aperta; il widget si aggiorna da solo circa ogni 5 minuti.";
+"Pagina dei crediti su OpenRouter" = "Pagina dei crediti su OpenRouter";
+"Impostazioni delle chiavi" = "Impostazioni delle chiavi";
+"Chiavi e dati:" = "Chiavi e dati:";
+"Crediti acquistati" = "Crediti acquistati";
+"Spesa totale" = "Spesa totale";
+"Limite chiave" = "Limite chiave";
+"Residuo chiave" = "Residuo chiave";
+"Oggi" = "Oggi";
+"Questa settimana" = "Questa settimana";
+"Questo mese" = "Questo mese";
+"Richieste gratuite" = "Richieste gratuite";
+"Ultimo aggiornamento: %@" = "Ultimo aggiornamento: %@";
+"residuo" = "residuo";
+"Nessun dato" = "Nessun dato";
+
+"credito residuo" = "credito residuo";
+"rimasti sulla chiave" = "rimasti sulla chiave";
+"spesa totale" = "spesa totale";
+"crediti non disponibili" = "crediti non disponibili";
+"nessun limite sulla chiave" = "nessun limite sulla chiave";
+"Configura l'app" = "Configura l'app";
+"Inserisci la chiave API di OpenRouter" = "Inserisci la chiave API di OpenRouter";
+"Apri l'app per riprovare" = "Apri l'app per riprovare";
+"Apri l'app per i dettagli" = "Apri l'app per i dettagli";
+"di %@ totali" = "di %@ totali";
+"limite %@" = "limite %@";
+"Aggiornato %@" = "Aggiornato %@";
+"Non aggiornato · %@" = "Non aggiornato · %@";
+"Oggi %@" = "Oggi %@";
+"Settimana %@" = "Settimana %@";
+"Mese %@" = "Mese %@";
+"ultime 24 ore" = "ultime 24 ore";
+"spesa di oggi" = "spesa di oggi";
+
+"Nessuna chiave configurata" = "Nessuna chiave configurata";
+"Chiave non valida" = "Chiave non valida";
+"Permessi insufficienti" = "Permessi insufficienti";
+"Errore HTTP %d" = "Errore HTTP %d";
+"Risposta non valida" = "Risposta non valida";
+"Nessuna connessione" = "Nessuna connessione";
+"Inserisci almeno una chiave API di OpenRouter." = "Inserisci almeno una chiave API di OpenRouter.";
+"OpenRouter ha rifiutato la chiave: controlla che sia corretta e attiva." = "OpenRouter ha rifiutato la chiave: controlla che sia corretta e attiva.";
+"La chiave non ha i permessi necessari per questa operazione." = "La chiave non ha i permessi necessari per questa operazione.";
+"OpenRouter ha risposto con un errore HTTP %d." = "OpenRouter ha risposto con un errore HTTP %d.";
+"OpenRouter ha restituito una risposta in un formato inatteso." = "OpenRouter ha restituito una risposta in un formato inatteso.";
+"Impossibile contattare OpenRouter: %@" = "Impossibile contattare OpenRouter: %@";
+"Serve una chiave di gestione per il saldo del conto" = "Serve una chiave di gestione per il saldo del conto";
+"Chiave di gestione non valida" = "Chiave di gestione non valida";
+
+"Giorno" = "Giorno";
+"Notte" = "Notte";
+"Automatico" = "Automatico";
+"Schema colori" = "Schema colori";
+"Crediti OpenRouter" = "Crediti OpenRouter";
+"Credito residuo e spesa su OpenRouter, aggiornati ogni pochi minuti." = "Credito residuo e spesa su OpenRouter, aggiornati ogni pochi minuti.";
+"Mostra i crediti disponibili su OpenRouter." = "Mostra i crediti disponibili su OpenRouter.";
+"Segue l'aspetto chiaro o scuro di macOS" = "Segue l'aspetto chiaro o scuro di macOS";
+"Fondo bianco, accento viola" = "Fondo bianco, accento viola";
+"Fondo nero, accento verde" = "Fondo nero, accento verde";
