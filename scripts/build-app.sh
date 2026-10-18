@@ -1,5 +1,5 @@
 #!/bin/bash
-# Costruisce OpenRouterCredits.app con l'estensione widget incorporata.
+# Costruisce "OpenRouter Credits.app" con l'estensione widget incorporata.
 #
 # SwiftPM non sa produrre bundle .app/.appex, quindi li assembliamo a mano:
 # binari universali, Info.plist corretti, entitlements (sandbox + app group),
@@ -9,12 +9,17 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-APP_NAME="OpenRouterCredits"
-WIDGET_NAME="OpenRouterCreditsWidget"
+# Nome del bundle (con spazio: è quello che vede l'utente in Finder, nel menu e
+# nella galleria widget) e nome dell'eseguibile (senza spazio: è il prodotto di
+# SwiftPM, che non accetta spazi nei nomi dei target).
+APP_BUNDLE_NAME="OpenRouter Credits"
+APP_EXECUTABLE="OpenRouterCredits"
+WIDGET_BUNDLE_NAME="OpenRouter Credits Widget"
+WIDGET_EXECUTABLE="OpenRouterCreditsWidget"
 BUNDLE_ID="com.giovanni.openroutercredits"
 WIDGET_BUNDLE_ID="${BUNDLE_ID}.widget"
-VERSION="1.0"
-BUILD_NUMBER="1"
+VERSION="1.1"
+BUILD_NUMBER="2"
 DEPLOYMENT_TARGET="14.0"
 
 # Firma: serve un certificato reale ("Apple Development"). Con la firma
@@ -33,8 +38,8 @@ if [[ -z "${CODESIGN_IDENTITY}" ]]; then
 fi
 
 OUT_DIR="build"
-APP_DIR="${OUT_DIR}/${APP_NAME}.app"
-APPEX_DIR="${APP_DIR}/Contents/PlugIns/${WIDGET_NAME}.appex"
+APP_DIR="${OUT_DIR}/${APP_BUNDLE_NAME}.app"
+APPEX_DIR="${APP_DIR}/Contents/PlugIns/${WIDGET_BUNDLE_NAME}.appex"
 
 SDK_VERSION="$(xcrun --sdk macosx --show-sdk-version)"
 
@@ -68,11 +73,10 @@ echo "==> Compilazione release universale (arm64 + x86_64)"
 # I const values servono per estrarre il metadata AppIntents (impostazioni del
 # widget): senza, il sistema non riesce a risolvere la configurazione.
 swift build -c release --arch arm64 --arch x86_64 -Xswiftc -emit-const-values
-
 # La cartella dei prodotti cambia tra versioni di SwiftPM.
 PRODUCTS_DIR=""
 for candidate in ".build/apple/Products/Release" ".build/out/Products/Release" ".build/release"; do
-    if [[ -x "${candidate}/${APP_NAME}" && -x "${candidate}/${WIDGET_NAME}" ]]; then
+    if [[ -x "${candidate}/${APP_EXECUTABLE}" && -x "${candidate}/${WIDGET_EXECUTABLE}" ]]; then
         PRODUCTS_DIR="${candidate}"
         break
     fi
@@ -94,8 +98,8 @@ echo "==> Assemblaggio del bundle"
 rm -rf "${APP_DIR}"
 mkdir -p "${APP_DIR}/Contents/MacOS" "${APP_DIR}/Contents/Resources" "${APPEX_DIR}/Contents/MacOS" "${APPEX_DIR}/Contents/Resources"
 
-cp "${PRODUCTS_DIR}/${APP_NAME}" "${APP_DIR}/Contents/MacOS/${APP_NAME}"
-cp "${PRODUCTS_DIR}/${WIDGET_NAME}" "${APPEX_DIR}/Contents/MacOS/${WIDGET_NAME}"
+cp "${PRODUCTS_DIR}/${APP_EXECUTABLE}" "${APP_DIR}/Contents/MacOS/${APP_EXECUTABLE}"
+cp "${PRODUCTS_DIR}/${WIDGET_EXECUTABLE}" "${APPEX_DIR}/Contents/MacOS/${WIDGET_EXECUTABLE}"
 cp "${OUT_DIR}/AppIcon.icns" "${APP_DIR}/Contents/Resources/AppIcon.icns"
 
 # Le traduzioni servono in entrambi i bundle: il widget le cerca nel proprio.
@@ -135,7 +139,7 @@ rm -rf "${OUT_DIR}/metadata"
 "${METADATA_TOOL}" \
     --output "${OUT_DIR}/metadata" \
     --toolchain-dir "$(dirname "$(dirname "$(xcrun --find swiftc)")")" \
-    --module-name "${WIDGET_NAME}" \
+    --module-name "${WIDGET_EXECUTABLE}" \
     --sdk-root "$(xcrun --sdk macosx --show-sdk-path)" \
     --xcode-version "${XCODE_VERSION}" \
     --platform-family macOS \
@@ -158,9 +162,9 @@ cat > "${APP_DIR}/Contents/Info.plist" <<PLIST
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
-    <string>OpenRouter Credits</string>
+    <string>${APP_BUNDLE_NAME}</string>
     <key>CFBundleExecutable</key>
-    <string>${APP_NAME}</string>
+    <string>${APP_EXECUTABLE}</string>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
     <key>CFBundleIdentifier</key>
@@ -168,7 +172,7 @@ cat > "${APP_DIR}/Contents/Info.plist" <<PLIST
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>${APP_NAME}</string>
+    <string>${APP_BUNDLE_NAME}</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -206,15 +210,15 @@ cat > "${APPEX_DIR}/Contents/Info.plist" <<PLIST
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
-    <string>OpenRouter Credits</string>
+    <string>${APP_BUNDLE_NAME}</string>
     <key>CFBundleExecutable</key>
-    <string>${WIDGET_NAME}</string>
+    <string>${WIDGET_EXECUTABLE}</string>
     <key>CFBundleIdentifier</key>
     <string>${WIDGET_BUNDLE_ID}</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>${WIDGET_NAME}</string>
+    <string>${WIDGET_BUNDLE_NAME}</string>
     <key>CFBundlePackageType</key>
     <string>XPC!</string>
     <key>CFBundleShortVersionString</key>
@@ -266,7 +270,7 @@ done
 # risulta collegato: senza questa correzione il widget verrebbe disegnato con
 # il layout di compatibilità di macOS 14.
 echo "==> Correzione di LC_BUILD_VERSION (minos ${DEPLOYMENT_TARGET}, sdk ${SDK_VERSION})"
-for binary in "${APP_DIR}/Contents/MacOS/${APP_NAME}" "${APPEX_DIR}/Contents/MacOS/${WIDGET_NAME}"; do
+for binary in "${APP_DIR}/Contents/MacOS/${APP_EXECUTABLE}" "${APPEX_DIR}/Contents/MacOS/${WIDGET_EXECUTABLE}"; do
     vtool -set-build-version macos "${DEPLOYMENT_TARGET}" "${SDK_VERSION}" -replace -output "${binary}" "${binary}"
 done
 
@@ -279,8 +283,8 @@ codesign --force --sign "${CODESIGN_IDENTITY}" --timestamp=none \
 echo "==> Verifica"
 codesign --verify --deep --strict "${APP_DIR}"
 codesign -d --entitlements - "${APPEX_DIR}" 2>/dev/null | grep -A3 application-groups | tail -2
-vtool -show-build "${APPEX_DIR}/Contents/MacOS/${WIDGET_NAME}" | grep -E "platform|minos|sdk"
-lipo -info "${APP_DIR}/Contents/MacOS/${APP_NAME}" | sed 's/^/    /'
+vtool -show-build "${APPEX_DIR}/Contents/MacOS/${WIDGET_EXECUTABLE}" | grep -E "platform|minos|sdk"
+lipo -info "${APP_DIR}/Contents/MacOS/${APP_EXECUTABLE}" | sed 's/^/    /'
 
 echo
 echo "Fatto: ${APP_DIR}"

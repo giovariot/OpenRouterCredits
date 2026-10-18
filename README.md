@@ -59,9 +59,15 @@ ogni chiave usata nel codice esista.
 ### Dalla release
 
 1. apri il DMG e trascina **OpenRouter Credits** in *Applicazioni*;
-2. al primo avvio: clic destro sull'app → **Apri** (la build non è notarizzata),
-   oppure `xattr -dr com.apple.quarantine /Applications/OpenRouterCredits.app`;
+2. **sblocca l'app al primo avvio** — è obbligatorio, non solo un avviso: la
+   build non è notarizzata, quindi macOS la mette in quarantena, e **finché
+   l'app è in quarantena macOS non registra la sua estensione widget** (il
+   widget non compare nella galleria). Sbloccala in uno dei due modi:
+   - clic destro sull'app in *Applicazioni* → **Apri** → **Apri**;
+   - oppure `xattr -dr com.apple.quarantine "/Applications/OpenRouter Credits.app"`;
 3. apri l'app, incolla la chiave e aggiungi il widget (vedi sotto).
+
+Nel DMG c'è anche un file `Come installare.txt` con questi passaggi.
 
 Nota: la build pubblicata è firmata con un certificato di sviluppo personale.
 Su un Mac diverso da quello di chi compila, il container condiviso tra app e
@@ -217,10 +223,19 @@ pluginkit -m -v -p com.apple.widgetkit-extension | grep -i openrouter
 
 Se il widget non compare nella galleria:
 
-1. verifica che l'app sia in `/Applications` e che sia stata aperta almeno una
+1. **controlla la quarantena**: se l'app è stata copiata da un DMG scaricato
+   dal browser, `xattr -l "/Applications/OpenRouter Credits.app"` mostra
+   `com.apple.quarantine`. Finché c'è, macOS non registra l'estensione widget.
+   Toglila con `xattr -dr com.apple.quarantine "/Applications/OpenRouter Credits.app"`
+   e poi riapri l'app;
+2. verifica che l'app sia in `/Applications` e che sia stata aperta almeno una
    volta;
-2. `killall chronod` e riprova (macOS rilegge l'elenco dei widget);
-3. controlla che la firma abbia il sandbox: `./scripts/check-widget.sh`.
+3. controlla che l'estensione sia registrata:
+   `pluginkit -m -v -p com.apple.widgetkit-extension | grep -i openrouter`.
+   Se manca, registrala a mano:
+   `pluginkit -a "/Applications/OpenRouter Credits.app/Contents/PlugIns/OpenRouter Credits Widget.appex"`;
+4. `killall chronod` e riprova (macOS rilegge l'elenco dei widget);
+5. controlla che la firma abbia il sandbox: `./scripts/check-widget.sh`.
 
 Se il widget mostra "Configura l'app" ma nell'app la chiave c'è, il widget non
 sta leggendo il container condiviso: ricompila e reinstalla con

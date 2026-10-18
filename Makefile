@@ -1,4 +1,4 @@
-APP_NAME := OpenRouterCredits
+APP_BUNDLE_NAME := OpenRouter Credits
 
 .PHONY: build test check check-strings preview dmg run install clean
 
@@ -20,7 +20,7 @@ dmg: build
 	./scripts/build-dmg.sh
 
 run: build
-	open "build/$(APP_NAME).app"
+	open "build/$(APP_BUNDLE_NAME).app"
 
 install: build
 	./scripts/install.sh

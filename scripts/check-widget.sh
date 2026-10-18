@@ -2,10 +2,11 @@
 # Controlla che l'app e l'estensione widget siano installate e funzionanti.
 set -uo pipefail
 
-APP_NAME="OpenRouterCredits"
-WIDGET_NAME="OpenRouterCreditsWidget"
-APP="/Applications/${APP_NAME}.app"
-APPEX="${APP}/Contents/PlugIns/${WIDGET_NAME}.appex"
+APP_BUNDLE_NAME="OpenRouter Credits"
+WIDGET_BUNDLE_NAME="OpenRouter Credits Widget"
+WIDGET_EXECUTABLE="OpenRouterCreditsWidget"
+APP="/Applications/${APP_BUNDLE_NAME}.app"
+APPEX="${APP}/Contents/PlugIns/${WIDGET_BUNDLE_NAME}.appex"
 
 # Stampa "sandbox=<true|false>" e "group=<app group o vuoto>".
 entitlement_report() {
@@ -31,7 +32,7 @@ SANDBOX="$(printf '%s\n' "${REPORT}" | sed -n 's/^sandbox=//p')"
 GROUP="$(printf '%s\n' "${REPORT}" | sed -n 's/^group=//p')"
 DATA_DIR=""
 if [[ -n "${GROUP}" ]]; then
-    DATA_DIR="${HOME}/Library/Group Containers/${GROUP}/${APP_NAME}"
+    DATA_DIR="${HOME}/Library/Group Containers/${GROUP}/OpenRouterCredits"
 fi
 
 echo "== App installata"
@@ -43,7 +44,7 @@ fi
 
 echo
 echo "== Estensione registrata (pluginkit)"
-if pluginkit -m -v -p com.apple.widgetkit-extension 2>/dev/null | grep -i "${WIDGET_NAME}"; then
+if pluginkit -m -v -p com.apple.widgetkit-extension 2>/dev/null | grep -i "${WIDGET_EXECUTABLE}"; then
     :
 else
     echo "    non registrata: esegui ./scripts/install.sh e apri l'app una volta"
@@ -56,8 +57,8 @@ echo "    app group:   ${GROUP:-nessuno (il widget non potrà leggere i dati)}"
 
 echo
 echo "== Processo del widget"
-if pgrep -fl "${WIDGET_NAME}" >/dev/null 2>&1; then
-    pgrep -fl "${WIDGET_NAME}" | sed 's/^/    /'
+if pgrep -fl "${WIDGET_EXECUTABLE}" >/dev/null 2>&1; then
+    pgrep -fl "${WIDGET_EXECUTABLE}" | sed 's/^/    /'
 else
     echo "    non in esecuzione (viene avviato dal sistema quando il widget è sul desktop)"
 fi
@@ -84,7 +85,7 @@ fi
 
 echo
 echo "== Errori recenti dell'estensione (ultimi 30 minuti)"
-ERRORS="$(log show --last 30m --info --debug --predicate "process == \"${WIDGET_NAME}\"" --style compact 2>/dev/null \
+ERRORS="$(log show --last 30m --info --debug --predicate "process == \"${WIDGET_EXECUTABLE}\"" --style compact 2>/dev/null \
     | grep -iE "error|crash|denied|assertion" \
     | grep -vE "boringssl|nw_read_request_report|Software caused connection abort|An XPC Service cannot be run directly|libxpc.dylib" \
     | tail -10)"
