@@ -18,8 +18,8 @@ WIDGET_BUNDLE_NAME="OpenRouter Credits Widget"
 WIDGET_EXECUTABLE="OpenRouterCreditsWidget"
 BUNDLE_ID="com.giovanni.openroutercredits"
 WIDGET_BUNDLE_ID="${BUNDLE_ID}.widget"
-VERSION="1.1"
-BUILD_NUMBER="2"
+VERSION="${APP_VERSION:-1.2.0}"
+BUILD_NUMBER="${APP_BUILD:-3}"
 DEPLOYMENT_TARGET="14.0"
 
 # Firma: serve un certificato reale ("Apple Development"). Con la firma

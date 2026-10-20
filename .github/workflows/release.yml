@@ -1,0 +1,81 @@
+# Build e release dell'app su macOS. Parte SOLO quando lo lanci a mano:
+# GitHub > Actions > "Release" > Run workflow (nessun trigger su push o PR).
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versione, per esempio 1.2.0 (il tag sarà v1.2.0)"
+        required: true
+        default: "1.2.0"
+      build:
+        description: "Numero di build (CFBundleVersion)"
+        required: true
+        default: "3"
+      prerelease:
+        description: "Segna la release come pre-release"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verifica traduzioni e test
+        run: make check
+
+      # Se nei secrets del repository ci sono un certificato "Apple Development"
+      # (.p12 in base64) e la sua password, l'app viene firmata con quello e
+      # l'app group funziona. Altrimenti si ripiega sulla firma ad-hoc.
+      - name: Importa il certificato di firma
+        env:
+          CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
+          CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+        run: |
+          if [[ -z "${CERT_P12}" ]]; then
+            echo "Nessun certificato nei secrets: firma ad-hoc."
+            echo "CODESIGN_IDENTITY=-" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          KEYCHAIN="${RUNNER_TEMP}/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          echo "${CERT_P12}" | base64 --decode > "${RUNNER_TEMP}/cert.p12"
+          security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+          security set-keychain-settings -lut 21600 "${KEYCHAIN}"
+          security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+          security import "${RUNNER_TEMP}/cert.p12" -k "${KEYCHAIN}" -P "${CERT_PASSWORD}" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${KEYCHAIN_PASSWORD}" "${KEYCHAIN}"
+          security list-keychains -d user -s "${KEYCHAIN}" login.keychain-db
+          rm -f "${RUNNER_TEMP}/cert.p12"
+
+      - name: Compila l'app
+        env:
+          APP_VERSION: ${{ inputs.version }}
+          APP_BUILD: ${{ inputs.build }}
+        run: ./scripts/build-app.sh
+
+      - name: Crea il DMG
+        env:
+          APP_VERSION: ${{ inputs.version }}
+        run: ./scripts/build-dmg.sh
+
+      - name: Pubblica la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          flags=()
+          if [[ "${PRERELEASE}" == "true" ]]; then flags+=(--prerelease); fi
+          gh release create "v${VERSION}" \
+            "build/OpenRouterCredits-${VERSION}.dmg" \
+            --target "${GITHUB_SHA}" \
+            --title "OpenRouter Credits ${VERSION}" \
+            --generate-notes \
+            "${flags[@]}"

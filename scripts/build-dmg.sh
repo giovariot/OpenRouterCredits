@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 APP_BUNDLE_NAME="OpenRouter Credits"
-VERSION="1.1.0"
+VERSION="${APP_VERSION:-1.2.0}"
 APP="build/${APP_BUNDLE_NAME}.app"
 STAGE="build/dmg"
 DMG="build/OpenRouterCredits-${VERSION}.dmg"

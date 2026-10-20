@@ -75,6 +75,18 @@ widget potrebbe non essere riconosciuto e il widget mostrare "Configura l'app";
 in quel caso conviene ricompilare dai sorgenti con il proprio certificato
 (sezione seguente).
 
+### Release con GitHub Actions
+
+Il workflow `.github/workflows/release.yml` compila l'app su un runner macOS,
+crea il DMG e lo pubblica come release. **Parte solo a richiesta**: GitHub →
+Actions → *Release* → *Run workflow* (versione, numero di build, pre-release).
+Non scatta su push o pull request.
+
+Per firmare con il tuo certificato *Apple Development* aggiungi ai secrets del
+repository `MACOS_CERT_P12` (il `.p12` in base64) e `MACOS_CERT_PASSWORD`.
+Senza, la build è firmata ad-hoc: l'app group non viene riconosciuto e il widget
+può mostrare "Configura l'app".
+
 ### Dai sorgenti
 
 ```bash
