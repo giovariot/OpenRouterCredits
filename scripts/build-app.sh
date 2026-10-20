@@ -125,9 +125,22 @@ fi
 CONST_VALUES_LIST="${OUT_DIR}/widget-const-values.txt"
 find .build -path "*OpenRouterCreditsWidget-p.build*" -name "*-primary.swiftconstvalues" -type f > "${CONST_VALUES_LIST}"
 if [[ ! -s "${CONST_VALUES_LIST}" ]]; then
-    echo "errore: nessun const value del widget trovato" >&2
+    # Altre versioni di SwiftPM/Xcode usano un'altra struttura delle cartelle
+    # (per esempio OpenRouterCreditsWidget.build/…/<arch>/*.swiftconstvalues):
+    # si prendono quelli del widget, e di una sola architettura se ce n'è più di una.
+    find .build -path "*OpenRouterCreditsWidget*" -name "*.swiftconstvalues" -type f > "${CONST_VALUES_LIST}"
+    NATIVE_ONLY="$(grep "/$(uname -m)/" "${CONST_VALUES_LIST}" || true)"
+    if [[ -n "${NATIVE_ONLY}" ]]; then
+        printf '%s\n' "${NATIVE_ONLY}" > "${CONST_VALUES_LIST}"
+    fi
+fi
+if [[ ! -s "${CONST_VALUES_LIST}" ]]; then
+    echo "errore: nessun const value del widget trovato. File presenti:" >&2
+    find .build -name "*constvalues*" -type f | head -40 >&2
     exit 1
 fi
+echo "    const values:"
+sed 's/^/      /' "${CONST_VALUES_LIST}"
 
 SOURCE_LIST="${OUT_DIR}/widget-sources.txt"
 ls Sources/OpenRouterCreditsWidget/*.swift > "${SOURCE_LIST}"
