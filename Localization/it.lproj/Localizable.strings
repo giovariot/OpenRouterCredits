@@ -106,3 +106,8 @@
 "Se disattivato, gli importi sono arrotondati." = "Se disattivato, gli importi sono arrotondati.";
 "spesa della settimana" = "spesa della settimana";
 "spesa del mese" = "spesa del mese";
+"Registra di nuovo il widget" = "Registra di nuovo il widget";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione.";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "Widget registrato: ora lo trovi in «Modifica widget…».";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac.";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@";

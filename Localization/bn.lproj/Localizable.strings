@@ -104,3 +104,8 @@
 "Se disattivato, gli importi sono arrotondati." = "বন্ধ থাকলে অঙ্কগুলো গোল করা হয়।";
 "spesa della settimana" = "এই সপ্তাহের খরচ";
 "spesa del mese" = "এই মাসের খরচ";
+"Registra di nuovo il widget" = "উইজেট আবার রেজিস্টার করুন";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "উইজেট গ্যালারিতে না দেখা গেলে: কোয়ারেন্টাইন সরিয়ে এক্সটেনশন আবার রেজিস্টার করে।";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "উইজেট রেজিস্টার হয়েছে: এটি «উইজেট সম্পাদনা…»-তে পাবেন।";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "রেজিস্ট্রেশন হয়েছে, কিন্তু macOS এখনও উইজেটটি দেখাচ্ছে না। কয়েক সেকেন্ড পরে আবার চেষ্টা করুন বা Mac রিস্টার্ট করুন।";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "অ্যাপটি এখনও কোয়ারেন্টাইনে আছে এবং এখান থেকে সরানো যাচ্ছে না। টার্মিনালে চালান: %@";

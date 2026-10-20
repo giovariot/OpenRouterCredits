@@ -104,3 +104,8 @@
 "Se disattivato, gli importi sono arrotondati." = "عند الإيقاف تُقرَّب المبالغ.";
 "spesa della settimana" = "مصروف هذا الأسبوع";
 "spesa del mese" = "مصروف هذا الشهر";
+"Registra di nuovo il widget" = "إعادة تسجيل الأداة";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "إذا لم تظهر الأداة في المعرض: يزيل الحجر ويعيد تسجيل الامتداد.";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "تم تسجيل الأداة: ستجدها في «تحرير الأدوات…».";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "تم التسجيل، لكن macOS لا يعرض الأداة بعد. حاول مرة أخرى بعد بضع ثوانٍ أو أعد تشغيل الجهاز.";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "التطبيق لا يزال في الحجر ولا يمكنني إزالته من هنا. نفّذ في الطرفية: %@";

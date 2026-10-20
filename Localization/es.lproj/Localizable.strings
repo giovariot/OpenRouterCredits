@@ -104,3 +104,8 @@
 "Se disattivato, gli importi sono arrotondati." = "Si se desactiva, los importes se redondean.";
 "spesa della settimana" = "gasto de esta semana";
 "spesa del mese" = "gasto de este mes";
+"Registra di nuovo il widget" = "Registrar el widget de nuevo";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "Si el widget no aparece en la galería: quita la cuarentena y vuelve a registrar la extensión.";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "Widget registrado: lo encontrarás en «Editar widgets…».";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "Registro hecho, pero macOS aún no muestra el widget. Inténtalo de nuevo en unos segundos o reinicia el Mac.";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "La app sigue en cuarentena y no puedo quitarla desde aquí. En Terminal ejecuta: %@";

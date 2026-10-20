@@ -104,3 +104,8 @@
 "Se disattivato, gli importi sono arrotondati." = "Если выключено, суммы округляются.";
 "spesa della settimana" = "расходы за неделю";
 "spesa del mese" = "расходы за месяц";
+"Registra di nuovo il widget" = "Зарегистрировать виджет заново";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "Если виджета нет в галерее: снимает карантин и заново регистрирует расширение.";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "Виджет зарегистрирован: он есть в разделе «Изменить виджеты…».";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "Регистрация выполнена, но macOS пока не показывает виджет. Повторите через несколько секунд или перезагрузите Mac.";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "Приложение всё ещё в карантине, и я не могу снять его отсюда. Выполните в Терминале: %@";

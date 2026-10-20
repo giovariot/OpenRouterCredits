@@ -19,6 +19,7 @@ final class AppModel {
     var statusIsError = false
     var isRefreshing = false
     var launchAtLogin: Bool
+    var isRegisteringWidget = false
 
     private let store = SharedStore.shared
     private let client = OpenRouterClient()
@@ -135,6 +136,26 @@ final class AppModel {
             launchAtLogin = LaunchAtLogin.isEnabled
             statusMessage = Strings.text("Impossibile cambiare l'avvio automatico: %@", error.localizedDescription)
             statusIsError = true
+        }
+    }
+
+    func registerWidget() {
+        guard !isRegisteringWidget else { return }
+        isRegisteringWidget = true
+        Task {
+            let outcome = await WidgetRegistration.run()
+            isRegisteringWidget = false
+            switch outcome {
+            case .registered:
+                statusMessage = Strings.text("Widget registrato: ora lo trovi in «Modifica widget…».")
+                statusIsError = false
+            case .pending:
+                statusMessage = Strings.text("Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac.")
+                statusIsError = true
+            case .quarantined(let command):
+                statusMessage = Strings.text("L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@", command)
+                statusIsError = true
+            }
         }
     }
 

@@ -104,3 +104,8 @@
 "Se disattivato, gli importi sono arrotondati." = "关闭后金额将四舍五入。";
 "spesa della settimana" = "本周消费";
 "spesa del mese" = "本月消费";
+"Registra di nuovo il widget" = "重新注册小组件";
+"Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione." = "如果小组件没有出现在小组件库中：移除隔离属性并重新注册扩展。";
+"Widget registrato: ora lo trovi in «Modifica widget…»." = "小组件已注册：可在“编辑小组件…”中找到。";
+"Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "注册已完成，但 macOS 还没有显示该小组件。请几秒后重试，或重启 Mac。";
+"L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "应用仍处于隔离状态，无法在此处移除。请在“终端”中运行：%@";

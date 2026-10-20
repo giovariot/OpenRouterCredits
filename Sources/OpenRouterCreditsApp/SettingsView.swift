@@ -17,7 +17,7 @@ struct SettingsView: View {
             .padding(20)
             .frame(width: 520)
         }
-        .frame(width: 520, height: 730)
+        .frame(width: 520, height: 790)
         .onAppear { model.onAppear() }
     }
 
@@ -230,6 +230,26 @@ struct SettingsView: View {
                 .font(.system(size: 11))
                 .foregroundStyle(.tertiary)
                 .fixedSize(horizontal: false, vertical: true)
+
+            Divider()
+
+            HStack(spacing: 10) {
+                Button {
+                    model.registerWidget()
+                } label: {
+                    if model.isRegisteringWidget {
+                        ProgressView().controlSize(.small)
+                    } else {
+                        Text(Strings.text("Registra di nuovo il widget"))
+                    }
+                }
+                .disabled(model.isRegisteringWidget)
+
+                Text(Strings.text("Se il widget non compare nella galleria: toglie la quarantena e registra di nuovo l'estensione."))
+                    .font(.system(size: 11))
+                    .foregroundStyle(.tertiary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 
