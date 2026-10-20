@@ -82,10 +82,19 @@ crea il DMG e lo pubblica come release. **Parte solo a richiesta**: GitHub →
 Actions → *Release* → *Run workflow* (versione, numero di build, pre-release).
 Non scatta su push o pull request.
 
-Per firmare con il tuo certificato *Apple Development* aggiungi ai secrets del
-repository `MACOS_CERT_P12` (il `.p12` in base64) e `MACOS_CERT_PASSWORD`.
-Senza, la build è firmata ad-hoc: l'app group non viene riconosciuto e il widget
-può mostrare "Configura l'app".
+La build di GitHub è firmata ad-hoc, quindi **va rifirmata sul tuo Mac** con il
+tuo certificato *Apple Development* (va bene anche quello gratuito di Xcode):
+senza, l'app group non viene riconosciuto e il widget non vede le chiavi.
+Scarica il DMG, poi:
+
+```bash
+./scripts/resign.sh "/Volumes/OpenRouter Credits/OpenRouter Credits.app"
+```
+
+Lo script installa l'app in `/Applications`, la rifirma, toglie la quarantena e
+registra il widget. In alternativa, se aggiungi ai secrets del repository
+`MACOS_CERT_P12` (il `.p12` in base64) e `MACOS_CERT_PASSWORD`, il workflow
+firma direttamente con quel certificato.
 
 ### Dai sorgenti
 
@@ -166,6 +175,7 @@ docs/previews/             # PNG delle anteprime usate in questo README
 scripts/build-app.sh       # compila e confeziona .app + .appex
 scripts/build-dmg.sh       # crea il DMG per la release
 scripts/install.sh         # installa e registra il widget
+scripts/resign.sh          # rifirma con il tuo certificato un'app scaricata
 scripts/check-widget.sh    # diagnostica
 scripts/check-strings.sh   # controllo delle traduzioni
 ```
