@@ -200,7 +200,7 @@ public struct WidgetMetrics: Equatable {
             return Hero(
                 kind: .usage,
                 metric: .total,
-                value: snapshot.keyUsage ?? snapshot.accountUsage,
+                value: snapshot.accountUsage ?? snapshot.keyUsage,
                 caption: Strings.text("spesa totale"),
                 detail: nil,
                 fraction: nil

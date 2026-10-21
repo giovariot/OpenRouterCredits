@@ -7,7 +7,9 @@ struct OpenRouterCreditsApp: App {
     @State private var model = AppModel()
 
     var body: some Scene {
-        WindowGroup("OpenRouter Credits") {
+        // Una sola finestra: con WindowGroup ogni tocco sul widget (URL
+        // openroutercredits://open) ne aprirebbe una nuova.
+        Window("OpenRouter Credits", id: "main") {
             SettingsView(model: model)
                 .onOpenURL { _ in
                     NSApp.activate(ignoringOtherApps: true)

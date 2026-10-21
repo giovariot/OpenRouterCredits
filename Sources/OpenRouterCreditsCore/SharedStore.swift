@@ -53,7 +53,7 @@ public struct SharedStore: Sendable {
         ensureDirectory()
         guard (try? data.write(to: configURL, options: .atomic)) != nil else { return false }
         try? FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: configURL.path)
-        return loadConfig().hasCredentials == config.hasCredentials
+        return loadConfig() == config
     }
 
     // MARK: - Stato

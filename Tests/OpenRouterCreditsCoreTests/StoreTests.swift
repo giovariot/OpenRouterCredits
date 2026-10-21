@@ -22,6 +22,19 @@ final class StoreTests: XCTestCase {
         XCTAssertEqual(store.loadConfig(), config)
     }
 
+    func testSaveConfigReportsSuccess() {
+        XCTAssertTrue(store.saveConfig(AppConfig(apiKey: "sk-or-v1-abc")))
+    }
+
+    func testSaveConfigReportsFailureWhenDirectoryIsNotWritable() throws {
+        // Una cartella "dentro" un file normale non si può creare.
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let blocker = directory.appendingPathComponent("file")
+        try Data().write(to: blocker)
+        let broken = SharedStore(directory: blocker.appendingPathComponent("sub", isDirectory: true))
+        XCTAssertFalse(broken.saveConfig(AppConfig(apiKey: "sk-or-v1-abc")))
+    }
+
     func testConfigFileIsPrivate() {
         store.saveConfig(AppConfig(apiKey: "sk-or-v1-abc"))
         let attributes = try? FileManager.default.attributesOfItem(atPath: store.configURL.path)
