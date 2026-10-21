@@ -17,7 +17,7 @@ struct SettingsView: View {
             .padding(20)
             .frame(width: 520)
         }
-        .frame(width: 520, height: 790)
+        .frame(width: 520, height: 700)
         .onAppear { model.onAppear() }
     }
 

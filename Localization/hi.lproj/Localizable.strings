@@ -109,3 +109,4 @@
 "Widget registrato: ora lo trovi in «Modifica widget…»." = "विजेट रजिस्टर हो गया: यह «विजेट संपादित करें…» में मिलेगा।";
 "Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "रजिस्ट्रेशन हो गया, लेकिन macOS अभी विजेट नहीं दिखा रहा। कुछ सेकंड बाद फिर कोशिश करें या Mac रीस्टार्ट करें।";
 "L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "ऐप अभी भी क्वारंटीन में है और मैं इसे यहाँ से नहीं हटा सकता। टर्मिनल में चलाएँ: %@";
+"Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac." = "कुंजियाँ साझा कंटेनर में सहेजी नहीं जा सकीं: ऐप के पास app group के लिए मान्य हस्ताक्षर नहीं है। अपने Mac पर scripts/resign.sh चलाएँ।";

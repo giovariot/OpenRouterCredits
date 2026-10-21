@@ -109,3 +109,4 @@
 "Widget registrato: ora lo trovi in «Modifica widget…»." = "উইজেট রেজিস্টার হয়েছে: এটি «উইজেট সম্পাদনা…»-তে পাবেন।";
 "Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "রেজিস্ট্রেশন হয়েছে, কিন্তু macOS এখনও উইজেটটি দেখাচ্ছে না। কয়েক সেকেন্ড পরে আবার চেষ্টা করুন বা Mac রিস্টার্ট করুন।";
 "L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "অ্যাপটি এখনও কোয়ারেন্টাইনে আছে এবং এখান থেকে সরানো যাচ্ছে না। টার্মিনালে চালান: %@";
+"Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac." = "শেয়ার্ড কন্টেইনারে কী সংরক্ষণ করা যায়নি: অ্যাপের app group-এর জন্য বৈধ স্বাক্ষর নেই। আপনার Mac-এ scripts/resign.sh চালান।";

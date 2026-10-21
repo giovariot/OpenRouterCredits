@@ -109,3 +109,4 @@
 "Widget registrato: ora lo trovi in «Modifica widget…»." = "小组件已注册：可在“编辑小组件…”中找到。";
 "Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "注册已完成，但 macOS 还没有显示该小组件。请几秒后重试，或重启 Mac。";
 "L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "应用仍处于隔离状态，无法在此处移除。请在“终端”中运行：%@";
+"Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac." = "无法将密钥保存到共享容器：应用没有适用于 App Group 的有效签名。请在你的 Mac 上运行 scripts/resign.sh。";

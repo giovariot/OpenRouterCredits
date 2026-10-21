@@ -44,11 +44,16 @@ public struct SharedStore: Sendable {
         return config
     }
 
-    public func saveConfig(_ config: AppConfig) {
-        guard let data = try? Self.encoder.encode(config) else { return }
+    /// Scrive la configurazione. Restituisce `false` se il file non è
+    /// scrivibile o non si rilegge identico (per esempio con un app group non
+    /// valido per la firma, dove il sandbox nega la scrittura in silenzio).
+    @discardableResult
+    public func saveConfig(_ config: AppConfig) -> Bool {
+        guard let data = try? Self.encoder.encode(config) else { return false }
         ensureDirectory()
-        try? data.write(to: configURL, options: .atomic)
+        guard (try? data.write(to: configURL, options: .atomic)) != nil else { return false }
         try? FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: configURL.path)
+        return loadConfig().hasCredentials == config.hasCredentials
     }
 
     // MARK: - Stato

@@ -72,7 +72,11 @@ final class AppModel {
         config.managementKey = Self.clean(managementKeyInput)
         apiKeyInput = config.apiKey ?? ""
         managementKeyInput = config.managementKey ?? ""
-        store.saveConfig(config)
+        guard store.saveConfig(config) else {
+            statusMessage = Strings.text("Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac.")
+            statusIsError = true
+            return
+        }
         statusMessage = config.hasCredentials ? Strings.text("Chiavi salvate.") : Strings.text("Chiavi rimosse.")
         statusIsError = false
         reloadWidgets()
@@ -94,6 +98,11 @@ final class AppModel {
 
         let saved = store.loadConfig()
         guard saved.hasCredentials else {
+            if config.hasCredentials {
+                statusMessage = Strings.text("Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac.")
+                statusIsError = true
+                return
+            }
             statusMessage = nil
             statusIsError = false
             state = store.loadState()

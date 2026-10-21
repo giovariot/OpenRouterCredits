@@ -109,3 +109,4 @@
 "Widget registrato: ora lo trovi in «Modifica widget…»." = "Widget registered: you'll find it in “Edit Widgets…”.";
 "Registrazione eseguita, ma macOS non mostra ancora il widget. Riprova tra qualche secondo o riavvia il Mac." = "Registration done, but macOS doesn't list the widget yet. Try again in a few seconds or restart your Mac.";
 "L'app è ancora in quarantena e non posso toglierla da qui. Nel Terminale esegui: %@" = "The app is still quarantined and I can't remove it from here. In Terminal, run: %@";
+"Impossibile salvare le chiavi nel contenitore condiviso: l'app non ha una firma valida per l'app group. Esegui scripts/resign.sh sul tuo Mac." = "Couldn't save the keys to the shared container: the app has no valid signature for the app group. Run scripts/resign.sh on your Mac.";
